@@ -2,6 +2,7 @@ const supertest = require("supertest");
 const express = require("express");
 const bodyParser = require("body-parser");
 const applyBaseRoutes = require("../../src/api/routes/logs-collector.routes");
+const applyDefaultMiddlewares = require("../../src/api/middlewares/default");
 const fakeLogs = require("../fakes/fake-log");
 
 describe("Log collector routes", () => {
@@ -9,7 +10,7 @@ describe("Log collector routes", () => {
 
     beforeEach(() => {
         const app = express();
-        app.use(bodyParser.json());
+        applyDefaultMiddlewares(app);
         applyBaseRoutes(app);
         server = supertest(app);
     });
