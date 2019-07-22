@@ -4,7 +4,6 @@ require("dotenv").config({
 });
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const morgan = require("morgan");
 
 const port = parseInt(process.env.PORT);
@@ -12,6 +11,7 @@ const host = process.env.HOST;
 const app = express();
 
 app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "public")));
 require("./api/middlewares/default")(app);
 
 require("./api/routes/base.routes")(app);
