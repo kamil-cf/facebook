@@ -9,7 +9,10 @@ function createPost(userRequest) {
     } = userRequest;
     const id = uuid.v4();
     posts.push({
-        author,
+        author: {
+            ...author,
+            id: uuid.v4()
+        },
         body: sanitize(body),
         images,
         id,
