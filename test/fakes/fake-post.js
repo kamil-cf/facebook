@@ -1,3 +1,5 @@
+const faker = require("faker");
+
 module.exports = {
     emptyPost() {
         return {}
@@ -5,12 +7,12 @@ module.exports = {
     fakePost() {
         return {
             author: {
-                id: "test id",
-                name: "test name",
-                avatar_url: "test url"
+                id: faker.random.uuid(),
+                name: faker.name.firstName(),
+                avatar_url: faker.internet.url()
             },
-            images: ["image 1"],
-            body: "test body"
+            images: [faker.internet.url()],
+            body: faker.lorem.sentence()
         }
     }
 }
