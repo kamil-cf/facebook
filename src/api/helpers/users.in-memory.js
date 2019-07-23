@@ -1,4 +1,5 @@
 const uuid = require("uuid");
+const sanitize = require("sanitize-html");
 
 const users = [];
 
@@ -8,9 +9,9 @@ function createUser(userRequest) {
     } = userRequest;
     const userId = uuid.v4();
     users.push({
-        email,
-        password,
-        name,
+        email: sanitize(email),
+        password: sanitize(password),
+        name: sanitize(name),
         id: userId,
         createdAt: Date.now()
     });

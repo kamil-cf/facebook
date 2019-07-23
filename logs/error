@@ -1,2 +1,3 @@
 {"message":"User not found","level":"error"}
 {"message":[{"keyword":"required","dataPath":"","schemaPath":"#/required","params":{"missingProperty":"name"},"message":"should have required property 'name'"}],"level":"error"}
+{"message":[{"keyword":"required","dataPath":"","schemaPath":"#/required","params":{"missingProperty":"name"},"message":"should have required property 'name'"}],"level":"error"}
