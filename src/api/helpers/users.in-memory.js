@@ -1,16 +1,17 @@
 const uuid = require("uuid");
+const bcrypt = require("bcrypt");
 const sanitize = require("sanitize-html");
 
 const users = [];
 
-function createUser(userRequest) {
+async function createUser(userRequest) {
     const {
         email, password, name
     } = userRequest;
     const userId = uuid.v4();
     users.push({
         email: sanitize(email),
-        password: sanitize(password),
+        password: await bcrypt.hash(sanitize(password), await bcrypt.genSalt()),
         name: sanitize(name),
         id: userId,
         createdAt: Date.now()
@@ -50,9 +51,28 @@ function byId(id) {
     return u => u.id === id;
 }
 
+function byEmail(email) {
+    return u => u.email === email;
+}
+
+function areCredentialsValid(password, email) {
+    const user = users.find(byEmail(email));
+
+    if(!user) {
+        return false;
+    }
+
+    return bcrypt.compare(password, user.password);
+}
+
+async function loginUser({password, email}) {
+    return await areCredentialsValid(password, email) ? uuid.v4() : false;
+}
+
 module.exports = {
     createUser,
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    loginUser
 }
