@@ -7,7 +7,7 @@ const applyLogsCollectorRoutes = require("../../src/api/routes/logs-collector.ro
 const applyDefaultMiddlewares = require("../../src/api/middlewares/default");
 const applyDefaultErrorMiddlewares = require("../../src/api/middlewares/default-error-handler");
 
-describe("Auth routes", () => {
+describe("Secret routes", () => {
     let server;
 
     beforeEach(() => {
@@ -22,24 +22,7 @@ describe("Auth routes", () => {
     });
 
     describe("POST /", () => {
-        it("should not login incomplete user", async () => {
-            const response = await server.post("/auth/").send({
-                email: "test@test.com"
-            });
-
-            expect(response.status).toBe(401);
-        });
-
-        it("should not login invalid user", async () => {
-            const response = await server.post("/auth/").send({
-                email: "test@test.com",
-                password: "a password"
-            });
-
-            expect(response.status).toBe(401);
-        });
-
-        it("should login user", async () => {
+        it("should have access with a valid session token", async () => {
             const email = "test@test.com";
             const password ="a password";
 
@@ -48,15 +31,23 @@ describe("Auth routes", () => {
                 password,
                 name: "test name"
             });
-            const response = await server.post("/auth/").send({
+            const authResponse = await server.post("/auth/").send({
                 email,
                 password
             });
+            const authOnlyResponse = await server.post("/secret/").set({
+                Authorization: `Bearer ${authResponse.body.sessionId}`
+            });
 
-            expect(response.status).toBe(200);
-            expect(response.body).toEqual(expect.objectContaining({
-                sessionId: expect.any(String)
-            }))
+            expect(authOnlyResponse.status).toBe(200);
+        });
+
+        it("should not have access with an invalid session token", async () => {
+            const authOnlyResponse = await server.post("/secret/").set({
+                Authorization: "Bearer not existing token"
+            });
+
+            expect(authOnlyResponse.status).toBe(401);
         });
     });
 });

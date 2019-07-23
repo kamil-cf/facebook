@@ -19,6 +19,7 @@ require("./api/routes/logs-collector.routes")(app);
 require("./api/routes/users.routes")(app);
 require("./api/routes/posts.routes")(app);
 require("./api/routes/auth.routes")(app);
+require("./api/routes/secret.routes")(app);
 
 require("./api/middlewares/default-error-handler")(app);
 
