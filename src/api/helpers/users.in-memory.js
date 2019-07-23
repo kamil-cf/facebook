@@ -1,6 +1,7 @@
 const uuid = require("uuid");
 const bcrypt = require("bcrypt");
 const sanitize = require("sanitize-html");
+const {createSession} = require("./session.in-memory");
 
 const users = [];
 
@@ -38,7 +39,7 @@ function deleteUser(userId) {
 function updateUser(userId, updatedDetails) {
     let user = users.find(byId(userId));
 
-    if(!user) {
+    if (!user) {
         return false;
     }
 
@@ -55,18 +56,18 @@ function byEmail(email) {
     return u => u.email === email;
 }
 
-function areCredentialsValid(password, email) {
-    const user = users.find(byEmail(email));
-
-    if(!user) {
-        return false;
-    }
-
+function areCredentialsValid(password, user) {
     return bcrypt.compare(password, user.password);
 }
 
 async function loginUser({password, email}) {
-    return await areCredentialsValid(password, email) ? uuid.v4() : false;
+    const user = users.find(byEmail(email));
+
+    if (!user) {
+        return false;
+    }
+
+    return await areCredentialsValid(password, user) ? createSession() : false;
 }
 
 module.exports = {

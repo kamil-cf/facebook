@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/kamil-cf/facebook#readme",
   "dependencies": {
+    "base64url": "3.0.1",
     "bcrypt": "3.0.6",
     "express": "4.17.1",
     "faker": "4.1.0",
