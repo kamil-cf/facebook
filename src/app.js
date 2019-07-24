@@ -1,3 +1,5 @@
+require = require("./perf")(require);
+
 const express = require("express");
 
 const app = express();
