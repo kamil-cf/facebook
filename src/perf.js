@@ -8,7 +8,7 @@ module.exports = (fn) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
             console.log(entry.name, entry.duration);
-            logger.info(entries);
+            logger.debug(entries);
         });
     });
 

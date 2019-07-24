@@ -1,5 +1,9 @@
 require = require("./perf")(require);
 
+const {setup: memorySetup} = require("./memory");
+
+memorySetup();
+
 const express = require("express");
 
 const app = express();

@@ -6,4 +6,5 @@ module.exports = (app) => {
     require("../api/routes/auth.routes")(app);
     require("../api/routes/secret.routes")(app);
     require("../api/routes/passport.routes")(app);
+    require("../api/routes/heapdump.routes")(app);
 }
