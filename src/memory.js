@@ -1,5 +1,5 @@
-const memwatch = require("memwatch-next");
-const {snapshot} = require("./api/helpers/heapdump");
+// const memwatch = require("memwatch-next");
+// const {snapshot} = require("./api/helpers/heapdump");
 const MEMORY_CHECK_INTERVAL = 500;
 const MEMORY_STATS_INTERVAL = 2000;
 
@@ -18,19 +18,19 @@ function setup() {
     //     console.log(stats);
     // }, MEMORY_STATS_INTERVAL);
 
-    snapOnLeak();
+    // snapOnLeak();
 }
 
-function snapOnLeak() {
-    memwatch.on("leak", (info) => {
-        snapshot((error) => {
-            if(error) {
-                return;
-            }
-            console.log(info);
-        });
-    });
-}
+// function snapOnLeak() {
+//     memwatch.on("leak", (info) => {
+//         snapshot((error) => {
+//             if(error) {
+//                 return;
+//             }
+//             console.log(info);
+//         });
+//     });
+// }
 
 module.exports = {
     setup
